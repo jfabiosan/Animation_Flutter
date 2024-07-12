@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Alignment bottomAlignment = Alignment.bottomRight;
-  int counter = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,8 @@ class _MyAppState extends State<MyApp> {
         body: Stack(
           children: [
             AnimatedAlign(
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(seconds: 1),
+              curve: Curves.ease,
               alignment: bottomAlignment,
               child: GestureDetector(
                 onTap: () {
@@ -30,24 +30,18 @@ class _MyAppState extends State<MyApp> {
                     bottomAlignment = bottomAlignment == Alignment.bottomRight
                         ? Alignment.topCenter
                         : Alignment.bottomRight;
-                    counter += 1;
                   });
                 },
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 900),
                   alignment: bottomAlignment,
                   height: 50,
-                  width: 100,
-                  decoration: const BoxDecoration(
+                  width: bottomAlignment == Alignment.bottomRight ? 50 : 100,
+                  decoration: BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Click-me: $counter',
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                    borderRadius: bottomAlignment == Alignment.bottomRight
+                        ? BorderRadius.circular(25)
+                        : BorderRadius.circular(8),
                   ),
                 ),
               ),
